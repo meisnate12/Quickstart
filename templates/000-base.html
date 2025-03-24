@@ -59,9 +59,14 @@
         <code>docker pull kometateam/quickstart:{{ version_info.branch }}</code>
         {% elif version_info.running_on == "Local" %}
         <br><br>
-        <span>Since you are running Quickstart from source, update it with:</span>
+        <span>Since you are running Quickstart from source, you can:</span>
         <br>
         <code>git pull && pip install -r requirements.txt</code>
+        <br><br>
+        <button id="applyUpdateBtn" class="btn btn-danger btn-sm">
+          <i class="bi bi-arrow-repeat"></i> Apply Update Now
+        </button>
+        <div id="updateStatus" class="mt-2 text-center"></div>
         {% else %}
         <a href="https://github.com/Kometa-Team/Quickstart/releases/download/v{{ version_info.remote_version }}/Quickstart-v{{ version_info.remote_version }}-{{ version_info.running_on }}{{ version_info.file_ext }}"
           target="_blank" class="alert-link">
@@ -124,13 +129,18 @@
             <code>docker pull kometateam/quickstart:{{ version_info.branch }}</code>
             {% elif version_info.running_on == "Local" %}
             <br><br>
-            <span>Since you are running Quickstart from source, update it with:</span>
+            <span>Since you are running Quickstart from source, you can:</span>
             <br>
             <code>git pull && pip install -r requirements.txt</code>
-            {% else %}
-            <a href="https://github.com/Kometa-Team/Quickstart/releases/download/v{{ version_info.remote_version }}/Quickstart-v{{ version_info.remote_version }}-{{ version_info.running_on }}{{ version_info.file_ext }}"
-              target="_blank">Update Now</a>
-            {% endif %}
+            <br><br>
+            <button id="applyUpdateBtnFooter" class="btn btn-danger btn-sm">
+              <i class="bi bi-arrow-repeat"></i> Apply Update Now
+            </button>
+          <div id="updateStatusFooter" class="mt-2 text-center"></div>
+          {% else %}
+          <a href="https://github.com/Kometa-Team/Quickstart/releases/download/v{{ version_info.remote_version }}/Quickstart-v{{ version_info.remote_version }}-{{ version_info.running_on }}{{ version_info.file_ext }}"
+            target="_blank">Update Now</a>
+          {% endif %}
           </p>
           {% endif %}
         </div>

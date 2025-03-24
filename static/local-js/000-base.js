@@ -167,4 +167,38 @@ function showToast (type, message) {
   toast.show()
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+  function handleApplyUpdate (buttonId, statusDivId) {
+    const applyBtn = document.getElementById(buttonId)
+    if (!applyBtn) return
+
+    applyBtn.addEventListener('click', function () {
+      applyBtn.disabled = true
+      applyBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...'
+
+      fetch('/perform_update', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+          const msgDiv = document.getElementById(statusDivId)
+          if (data.status === 'success') {
+            msgDiv.innerHTML = `<div class="alert alert-success"><i class="bi bi-check-circle-fill"></i> ${data.message}</div>`
+          } else {
+            msgDiv.innerHTML = `<div class="alert alert-danger"><i class="bi bi-exclamation-circle-fill"></i> ${data.message}</div>`
+          }
+        })
+        .catch(error => {
+          const msgDiv = document.getElementById(statusDivId)
+          msgDiv.innerHTML = `<div class="alert alert-danger">Error: ${error}</div>`
+        })
+        .finally(() => {
+          applyBtn.disabled = false
+          applyBtn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Apply Update Now'
+        })
+    })
+  }
+
+  handleApplyUpdate('applyUpdateBtn', 'updateStatus')
+  handleApplyUpdate('applyUpdateBtnFooter', 'updateStatusFooter')
+})
+
 /* eslint-enable no-unused-vars */

@@ -881,6 +881,17 @@ def shutdown():
     return "Shutting down...", 200
 
 
+@app.route("/perform_update", methods=["POST"])
+def perform_update():
+    from modules.updater import Updater
+
+    updater = Updater()
+    try:
+        updater.apply_update()
+        return jsonify({"status": "success", "message": "Update applied. Please restart the app."})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)})
+
 server_thread = None
 update_thread = None
 if __name__ == "__main__":
